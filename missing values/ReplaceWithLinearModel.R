@@ -13,6 +13,10 @@ startRow <- 1
 #  which row to stop processing
 endRow <- nrow(data)
 
+## possible min and max value
+maxValue <- .Machine$integer.max
+minValue <- 0
+
 ## initialize result
 result <- data.frame()
 
@@ -25,7 +29,7 @@ for(rowNum in c(startRow : endRow)){
     
     ## test if all values in series are NA
     if(length(series[!is.na(series)[startColumn:endColumn]]) == 0){
-        complete_series <- rep(0, endRow - startRow)
+        complete_series <- append(rep(NA,startColumn-1), rep(0, endRow - startRow))
     }else{
         ## test if all values in the series is not NA
         if(length(series[is.na(series)[startColumn:endColumn]]) == 0){
@@ -42,8 +46,10 @@ for(rowNum in c(startRow : endRow)){
             
             ## put data together
             complete_series <- series
-            #names(complete_series) <- names(series)
             complete_series[is.na(series)][startColumn:endColumn] <- prediction$fit[is.na(series)[startColumn:endColumn]]
+            
+            complete_series[startColumn:endColumn][complete_series[startColumn:endColumn] < minValue] <- minValue
+            complete_series[startColumn:endColumn][complete_series[startColumn:endColumn] > maxValue] <- maxValue
         }
     }
     
@@ -54,3 +60,10 @@ for(rowNum in c(startRow : endRow)){
 
 ## rewrite the names of the columns
 names(result) <- names(data)
+
+## rewrite values beyond replacing
+result <- data.frame(result)
+result <-cbind(data[,1:startColumn-1],result[startColumn:endColumn])
+
+
+write.csv(result, "/Users/xiangjiang/Documents/temp/[no missing value]Average income.csv", row.names = FALSE)
