@@ -1,5 +1,5 @@
 classes <- rep("character",158)
-data <- read.csv("/Users/xiangjiang/Documents/temp/Average income.csv", colClasses=classes)
+data <- read.csv("/Users/xiangjiang/Documents/temp/Average income/[original]Average income.csv", colClasses=classes)
 
 ## initialization
 #  from which column to start indexing
@@ -65,5 +65,4 @@ names(result) <- names(data)
 result <- data.frame(result)
 result <-cbind(data[,1:startColumn-1],result[startColumn:endColumn])
 
-
-write.csv(result, "/Users/xiangjiang/Documents/temp/[no missing value]Average income.csv", row.names = FALSE)
+write.csv(result, "/Users/xiangjiang/Documents/temp/[no missing value-monthly]Average income.csv", row.names = FALSE)
