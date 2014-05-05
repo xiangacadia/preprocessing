@@ -1,11 +1,9 @@
-classes <- rep("character",158)
-data <- read.csv("/Users/xiangjiang/Documents/temp/Average income/[original]Average income.csv", colClasses=classes)
+classes <- rep("character",19)
+data <- read.csv("/Users/xiangjiang/Documents/temp/GDP/1.[original]GDP_new.csv", colClasses=classes)
 
 ## initialization
 #  from which column to start indexing
 startColumn <- 3
-#  the NA string
-NA_str <- 'x'
 #  which column to stop preprocessing
 endColumn <- ncol(data)
 #  which row to start processing
@@ -65,4 +63,4 @@ names(result) <- names(data)
 result <- data.frame(result)
 result <-cbind(data[,1:startColumn-1],result[startColumn:endColumn])
 
-write.csv(result, "/Users/xiangjiang/Documents/temp/[no missing value-monthly]Average income.csv", row.names = FALSE)
+write.csv(result, "/Users/xiangjiang/Documents/temp/GDP/2.[no missing value]GDP_new.csv", row.names = FALSE)
